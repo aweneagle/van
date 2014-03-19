@@ -88,9 +88,9 @@
 
 
 
-    function van_read($oid, $query, &$data){
+    function van_read($oid, $query){
         van_assert( ($obj = van_get($oid)) instanceof IIo, "obj is not instance of IIo" );
-        $data = $obj->read($query);
+        return $obj->read($query);
     }
 
     function van_write($oid, $data){
@@ -103,23 +103,23 @@
         $obj->flush();
     }
 
-    function van_pop($oid, &$res){
+    function van_pop($oid ){
         van_assert( ($obj = van_get($oid)) instanceof IIo, "obj is not instance of IIo" );
-        $res = $obj->pop();
+        return $obj->pop();
     }
 
 
     
-    function van_map($oid, $data, &$res){
+    function van_map($oid, $data ){
         van_assert( ($obj = van_get($oid)) instanceof IMap, "obj is not instance of IMap" );
-        $res = $obj->map($data);
+        return $obj->map($data);
     }
 
 
 
-    function van_run($oid, $params=array(), &$res = null){
+    function van_run($oid, $params=array()){
         van_assert( ($obj = van_get($oid)) instanceof IJob, "obj is not instance of IJob" );
-        $res = $obj->run($params);
+        return $obj->run($params);
     }
 
 
@@ -130,10 +130,10 @@
         $obj->$attr_name = $attr_value;
     }
 
-    function van_get_attr($oid, $attr_name, &$attr_val){
+    function van_get_attr($oid, $attr_name){
         van_assert( ($obj = van_get($oid)) instanceof ICtrl, "obj is not instance of ICtrl" );
         van_assert( isset($obj->$attr_name), "empty attr_name");
-        $attr_val = $obj->$attr_name;
+        return $obj->$attr_name;
     }
     
     function van_add_attr($oid, $attr_name, $attr_value){
@@ -150,9 +150,9 @@
         return $obj->set_state($state);
     }
 
-    function van_get_state($oid, &$attr){
+    function van_get_state($oid){
         van_assert( ($obj = van_get($oid)) instanceof IState, "obj is not instance of IState" );
-        $attr = $obj->get_state();
+        return $obj->get_state();
     }
 
 
