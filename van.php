@@ -88,9 +88,9 @@
 
 
 
-    function van_read($oid, $query){
+    function van_read($oid, $query, &$data){
         van_assert( ($obj = van_get($oid)) instanceof IIo, "obj is not instance of IIo" );
-        return $obj->read($query);
+        $data = $obj->read($query);
     }
 
     function van_write($oid, $data){
@@ -100,26 +100,26 @@
 
     function van_flush($oid){
         van_assert( ($obj = van_get($oid)) instanceof IIo, "obj is not instance of IIo" );
-        return $obj->flush();
+        $obj->flush();
     }
 
-    function van_pop($oid){
+    function van_pop($oid, &$res){
         van_assert( ($obj = van_get($oid)) instanceof IIo, "obj is not instance of IIo" );
-        return $obj->pop();
+        $res = $obj->pop();
     }
 
 
     
-    function van_map($oid, $data){
+    function van_map($oid, $data, &$res){
         van_assert( ($obj = van_get($oid)) instanceof IMap, "obj is not instance of IMap" );
-        return $obj->map($data);
+        $res = $obj->map($data);
     }
 
 
 
-    function van_run($oid, $params=array()){
+    function van_run($oid, $params=array(), &$res = null){
         van_assert( ($obj = van_get($oid)) instanceof IJob, "obj is not instance of IJob" );
-        return $obj->run($params);
+        $res = $obj->run($params);
     }
 
 
@@ -130,10 +130,10 @@
         $obj->$attr_name = $attr_value;
     }
 
-    function van_get_attr($oid, $attr_name){
+    function van_get_attr($oid, $attr_name, &$attr_val){
         van_assert( ($obj = van_get($oid)) instanceof ICtrl, "obj is not instance of ICtrl" );
         van_assert( isset($obj->$attr_name), "empty attr_name");
-        return $obj->$attr_name;
+        $attr_val = $obj->$attr_name;
     }
     
     function van_add_attr($oid, $attr_name, $attr_value){
@@ -150,9 +150,9 @@
         return $obj->set_state($state);
     }
 
-    function van_get_state($oid){
+    function van_get_state($oid, &$attr){
         van_assert( ($obj = van_get($oid)) instanceof IState, "obj is not instance of IState" );
-        return $obj->get_state();
+        $attr = $obj->get_state();
     }
 
 
