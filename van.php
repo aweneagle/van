@@ -29,8 +29,7 @@
         $oid = $GLOBALS["__van_objs_num"] ;
         $GLOBALS["__van_objs_num"] ++;
         $GLOBALS["__van_objs"][$oid]["obj"] = $obj;
-        $GLOBALS["__van_objs"][$oid]["nl"] = 1;
-        $GLOBALS["__van_links"][$oid] = $oid;
+        $GLOBALS["__van_objs"][$oid]["nl"] = 0;
         return $oid;
     }
 
@@ -67,21 +66,22 @@
             $GLOBALS["__van_links"][$linkname] = $oid;
             $GLOBALS["__van_objs"][$oid]['nl'] += 1;
         }
-
-        return $oid;
     }
 
     function van_unlink($linkname){
         if (isset($GLOBALS["__van_links"][$linkname])) {
-            $oid = $GLOBALS["__van_links"][$linkname];
             unset($GLOBALS["__van_links"][$linkname]);
+            $oid = $GLOBALS["__van_links"][$linkname];
 
-            if (isset($GLOBALS["__van_objs"][$oid])) {
-                $GLOBALS["__van_objs"][$oid]["nl"] -= 1;
+        } else {
+            $oid = $linkname;
+        }
 
-                if ($GLOBALS["__van_objs"][$oid]["nl"] <= 1) {
-                    unset($GLOBALS["__van_objs"][$oid]);
-                }
+        if (isset($GLOBALS["__van_objs"][$oid])) {
+            $GLOBALS["__van_objs"][$oid]["nl"] -= 1;
+
+            if ($GLOBALS["__van_objs"][$oid]["nl"] <= 0) {
+                unset($GLOBALS["__van_objs"][$oid]);
             }
         }
     }
