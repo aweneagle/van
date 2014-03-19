@@ -241,4 +241,4 @@
     /* default init */
     van_add_classloader(new VanStdClassLoader);
 
-?>    
+?>
