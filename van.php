@@ -2,6 +2,9 @@
     if (!defined("VAN_ROOT")) {
         define("VAN_ROOT", dirname(__FILE__) . "/");
     }
+    if (!defined("VAN_TIME_NOW")) {
+        define("VAN_TIME_NOW", time());
+    }
 
     $GLOBALS["__van_objs"] = array();
     $GLOBALS["__van_objs_num"] = 1;
@@ -21,7 +24,7 @@
         $loader = new $classname;
         van_assert($loader instanceof IAutoload, "class is not instance of IAutoload");
         $oid = van_load($loader);
-        @spl_autoload_register(array(van_get($oid), "autoload"));
+        spl_autoload_register(array(van_get($oid), "autoload"));
         return $oid;
     }
     
@@ -38,8 +41,12 @@
     }
 
     function van_get($oid) {
+        if (isset($GLOBALS["__van_objs"][$oid])) {
+            return $GLOBALS["__van_objs"][$oid]["obj"];
+        }
         if (isset($GLOBALS["__van_links"][$oid])) {
             $oid = $GLOBALS["__van_links"][$oid];
+            van_assert(isset($GLOBALS["__van_objs"][$oid]), "empty obj for oid");
             return $GLOBALS["__van_objs"][$oid]["obj"];
         }
     }
@@ -66,6 +73,39 @@
             $GLOBALS["__van_links"][$linkname] = $oid;
             $GLOBALS["__van_objs"][$oid]['nl'] += 1;
         }
+        return $oid;
+    }
+
+    function van_batch_link(array $cfg) {
+        foreach ($cfg as $linkname => $io) {
+            $obj = van_create_obj($io);
+            van_link($linkname, $obj);
+        }
+    }
+
+    function van_create_obj(array $cfg) {
+        $io = $cfg;
+        if (class_exists($io['CLASS'])) {
+            $io["CLASS"] = trim($io["CLASS"]);
+
+            $IO_CLASS = $io['CLASS'];
+            unset($io['CLASS']);
+            $obj = new $IO_CLASS($io);
+
+            foreach ($io as $attr_name => $attr_value) {
+                if (property_exists($obj, $attr_name)) {
+                    if (is_array($attr_value) && isset($attr_value["CLASS"])) {
+                        if (class_exists($attr_value["CLASS"])) {
+                            $obj->$attr_name = van_create_obj($attr_value);
+                        }
+                    } else {
+                        $obj->$attr_name = $attr_value;
+                    }
+                }
+            }
+            return $obj;
+        }
+        return null;
     }
 
     function van_unlink($linkname){
@@ -85,8 +125,6 @@
             }
         }
     }
-
-
 
     function van_read($oid, $query){
         van_assert( ($obj = van_get($oid)) instanceof IIo, "obj is not instance of IIo" );

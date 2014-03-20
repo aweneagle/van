@@ -1,6 +1,6 @@
 <?php
 
-    class IoMpi extends WeBaseObj implements IIo, IState {
+    class IoMpi implements IIo, IState {
 
         public $storage;
         public $cache;
@@ -33,11 +33,12 @@
     }
 
 
-    class IoMpiMysql extends IoMysql{ 
+    class IoMpiMysql implements IIO{ 
         public $db;
         public $table;
         public $field;
         public $mod;   //multi tables
+        public $mysql;  //link to an mysql io
 
         private function get_table_no($key){
             return "01";
@@ -46,7 +47,8 @@
         public function read($uid){
             $uid = pack("H*",$uid);
             $table_no = $this->get_table_no($uid);
-            $data = parent::read(
+            $data = van_read(
+                    $this->mysql, 
                     array(
                         "query"=>"select " . $this->field . " from " . $this->db . "." . $this->table .$table_no. " where id = ?" ,
                         "columns"=>array($uid)
@@ -63,11 +65,15 @@
         public function write($data){
             $data["key"] = pack("H*", $data["key"]);
             $table_no = $this->get_table_no($data["key"]);
-            return parent::write(
+            return van_write(
+                    $this->mysql, 
                     array(
                         "query" => "replace into " . $this->db . "." . $this->table .$table_no." set " . $this->field . "=?" . ", id=?",
                         "columns" => array( $data["val"], $data["key"] )
                         )
                     );
         }
+
+        public function flush(){}
+        public function pop(){}
     }

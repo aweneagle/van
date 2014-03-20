@@ -72,8 +72,9 @@
         }
 
         private function _connect(){
-            $this->conn = new PDO("mysql:host=".$this->host.";port=".$this->port, $this->user, $this->passwd);
+            $this->conn = new PDO("mysql:host=".$this->host.";port=".$this->port, $this->user, $this->passwd,  array(PDO::ATTR_PERSISTENT => false, PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''));
             van_assert(!empty($this->conn), "failed to conn mysql");
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
 
         /* mysql execute query
@@ -108,7 +109,7 @@
                 $st = $this->conn->prepare($query);
                 if ($this->_arr_dimention($pdo_query['columns']) == 1) {
 
-                    van_assert($st->execute($pdo_query["columns"]) === true,  "failed to execute query", "query:".$query, "er:".@json_encode($st->errorInfo()));
+                    van_assert($st->execute($pdo_query["columns"]) === true,  "failed to execute query:".$query, "er:".@json_encode($st->errorInfo()));
 
                     return $this->_result($st, $type);
 
