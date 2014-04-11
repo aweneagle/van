@@ -6,7 +6,7 @@
 		private $doc = array();
 		private $is_dirty = false;
 		public final function write($data){
-			core_assert(is_array($data), $data);
+			van_assert(is_array($data), $data);
 			foreach ($data as $key=>$val){
 				$this->doc[$key] = $val;
 			}

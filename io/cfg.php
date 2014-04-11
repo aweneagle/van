@@ -5,8 +5,8 @@
 		public $aux = null;
 
 		public function read($index=null){
-			frame_assert($this->pri != null);
-			frame_assert($this->aux != null);
+			van_assert($this->pri != null, "empty pri key for configuration");
+			van_assert($this->aux != null, "empty aux key for configuration");
 			return CC_Reader_Manager::get($index, $this->pri, $this->aux);
 		}
 		

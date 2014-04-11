@@ -1,6 +1,6 @@
 <?php
 
-    class IoRedis extends WeBaseObj implements IIo {
+    class IoRedis implements IIo {
         public $host;
         public $port;
         public function read($index){

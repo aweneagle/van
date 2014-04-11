@@ -5,6 +5,12 @@
     if (!defined("VAN_TIME_NOW")) {
         define("VAN_TIME_NOW", time());
     }
+    if (!defined("VC_TIME_NOW")) {
+        define("VC_TIME_NOW", time());
+    }
+    if (!defined('VAN_MIC_TIME_NOW')) {
+         define('VAN_MIC_TIME_NOW', str_replace('.', '', microtime(true)));
+    }
 
     $GLOBALS["__van_objs"] = array();
     $GLOBALS["__van_objs_num"] = 1;
@@ -110,8 +116,8 @@
 
     function van_unlink($linkname){
         if (isset($GLOBALS["__van_links"][$linkname])) {
-            unset($GLOBALS["__van_links"][$linkname]);
             $oid = $GLOBALS["__van_links"][$linkname];
+            unset($GLOBALS["__van_links"][$linkname]);
 
         } else {
             $oid = $linkname;
@@ -164,7 +170,7 @@
 
     function van_set_attr($oid, $attr_name, $attr_value){
         van_assert( ($obj = van_get($oid)) instanceof ICtrl, "obj is not instance of ICtrl" );
-        van_assert( isset($obj->$attr_name), "empty attr_name");
+        van_assert( property_exists($obj, $attr_name), "empty attr_name");
         $obj->$attr_name = $attr_value;
     }
 
