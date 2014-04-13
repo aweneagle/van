@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<root>
+<io class="IoMysql" link="WWW_DB0">
+    <host>127.0.0.1</host>
+    <host>127.0.0.1</host>
+    <host>127.0.0.1</host>
+    <port>3306</port>
+    <user>awen</user>
+    <passwd>awen</passwd>
+</io>
+
+<io class="IoMysql" link="WWW_DB1">
+    <host>127.0.0.1</host>
+    <port>3306</port>
+    <user>awen</user>
+    <passwd>awen</passwd>
+</io>
+
+<io class="IoMemcached" link="WWW_CACHE0">
+    <host>127.0.0.1</host>
+    <port>10001</port>
+</io>
+
+<io class="IoMemcached" link="WWW_CACHE1">
+    <host>127.0.0.1</host>
+    <port>10002</port>
+</io>
+
+
+<io class="IoMpiMysql" link="WWW_MYSQL_USER">
+	<db>WWW_DB0</db>
+	<db>WWW_DB1</db>
+	<db>WWW_DB2</db>
+	<dbname>db_pepper_user</dbname>
+	<table_pref>m_user_</table_pref>
+</io>
+
+<io class="IoMpiRedis" link="WWW_REDIS_USER">
+	<storage>WWW_REDIS0</storage>
+	<storage>WWW_REDIS1</storage>
+</io>
+
+<io class="IoMpiMemcache" link="WWW_CACHE_USER">
+	<cache>WWW_CACHE0</cache>
+	<cache>WWW_CACHE1</cache>
+</io>
+
+
+<io class="IoMpi" link="WWW_USER">
+	<storage>WWW_MYSQL_USER</storage>
+	<cache>WWW_CACHE_USER</cache>
+</io>
+
+<job class="JobAsyncData" link="WWW_JOB_SYNC_USER">
+	<cache>WWW_REDIS_USER</cache>
+	<storage>WWW_MYSQL_USER</storage>
+</job>
+
+<job class="JobAsyncAll" link="WWW_JOB_SYNC_ALL_USER">
+	<storage>WWW_MYSQL_USER</storage>
+</job>
+</root>

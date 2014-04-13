@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <top>
+      <element1>element content 1</element1>
+      <element2 var2="val2" />
+      <element3 var3="val3" var4="val4">element content 3</element3>
+      <element3 var5="val5">element content 4</element3>
+      <element3 var6="val6" />
+      <element3>element content 7</element3>
+    </top>

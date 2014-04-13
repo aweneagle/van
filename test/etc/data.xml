@@ -1,0 +1,11 @@
+<data class="DataUser">
+	<db>db_pepper_user</db>
+
+	<table>m_user_%x[256]</table>
+
+	<field>id, int(10), not null, primary key</field>
+	<field>name, char(10), not null</field>
+	<field>sex, int(2), not null</field>
+	<field>sex, int(2), not null</field>
+	<index>id</index>
+</data>
