@@ -1,0 +1,35 @@
+<root>
+    <item id="1234">
+        <name>
+            <first>awen</first>
+            <last>zhang</last>
+        </name>
+        <sex >boy</sex>
+        <favrioute>
+            <book>bible</book>
+            <film>last day</film>
+        </favrioute>
+    </item>
+    <item id="1234">
+        <name>
+            <first>awen</first>
+            <last>zhang</last>
+        </name>
+        <sex >boy</sex>
+        <favrioute>
+            <book>bible</book>
+            <film>last day</film>
+        </favrioute>
+    </item>
+    <item id="1234">
+        <name>
+            <first>awen</first>
+            <last>zhang</last>
+        </name>
+        <sex >boy</sex>
+        <favrioute>
+            <book>bible</book>
+            <film>last day</film>
+        </favrioute>
+    </item>
+</root>
