@@ -20,7 +20,7 @@
     }
 
     interface IStack {
-        public function push();
+        public function push($data);
         public function pop();
     }
 

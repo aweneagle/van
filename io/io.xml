@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<root>
+<DB0>
+    <class>IoMysql</class>
+    <host>127.0.0.1</host>
+    <port>3306</port>
+    <user>awen</user>
+    <passwd>awen</passwd>
+</DB0>
+<DB1>
+    <class>IoMysql</class>
+    <host>127.0.0.2</host>
+    <port>3306</port>
+    <user>awen</user>
+    <passwd>awen</passwd>
+</DB1>
+<CACHE0>
+    <class>IoMemcache</class>
+    <host>127.0.0.1</host>
+    <port>10001</port>
+</CACHE0>
+<CACHE1>
+    <class>IoMemcache</class>
+    <host>127.0.0.1</host>
+    <port>10002</port>
+</CACHE1>
+<CACHE3>
+    <class>IoRedis</class>
+    <host>127.0.0.1</host>
+    <port>10003</port>
+</CACHE3>
+
+<MPI_USER>
+    <storage>
+        <class>IoMpiDB</class>
+        <db>WWW_DB3</db>
+        <db>WWW_DB3</db>
+        <db>WWW_DB3</db>
+        <db>WWW_DB3</db>
+        <db_tran>2:3:4</db_tran>
+        <dbname>user</dbname>
+        <table>user_info</table>
+    </storage>
+    <cache>
+        <class>IoMpiCache</class>
+        <prefix>user</prefix>
+        <cache>CACHE3</cache>
+        <cache>CACHE3</cache>
+        <cache>CACHE3</cache>
+    </cache>
+</MPI_USER>
+</root>
