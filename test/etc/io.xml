@@ -2,8 +2,6 @@
 <root>
 <io class="IoMysql" link="WWW_DB0">
     <host>127.0.0.1</host>
-    <host>127.0.0.1</host>
-    <host>127.0.0.1</host>
     <port>3306</port>
     <user>awen</user>
     <passwd>awen</passwd>
@@ -28,8 +26,6 @@
 
 
 <io class="IoMpiMysql" link="WWW_MYSQL_USER">
-	<db>WWW_DB0</db>
-	<db>WWW_DB1</db>
 	<db>WWW_DB2</db>
 	<dbname>db_pepper_user</dbname>
 	<table_pref>m_user_</table_pref>

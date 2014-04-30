@@ -41,7 +41,7 @@
 	}
 
 
-	include '../van/van.php';
+	include '../van.php';
 	//van_set_error_report( VAN_ERROR_REPORT_WARNING );
 
 	$io_xml = './etc/io.xml';

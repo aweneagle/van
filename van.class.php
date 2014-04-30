@@ -3,7 +3,6 @@
     /************** base classes **********/
     class VanStdClassLoader implements IAutoload {
 
-	public $loaded = array();
         public $class_roots = array(VAN_ROOT);
 
         /* auto load class
@@ -19,18 +18,16 @@
             foreach ($this->class_roots as $dir) {
 
                 $file = $dir."/".$path.".php";          //try path  "a/b.php" for class ABC
-                if (!isset($this->loaded[$file]) && file_exists($file)) {
+                if (file_exists($file)) {
                     include $file;
-		    $this->loaded[$file] = 1;
                     if (class_exists($name) || interface_exists($name)) {
                         return ;
                     }
                 }
 
                 $file = $dir."/".$path."/".$classfile.".php";           //try path  "a/b/c.php" for class ABC
-                if (!isset($this->loaded[$file]) && file_exists($file)) {
+                if (file_exists($file)) {
                     include $file;
-		    $this->loaded[$file] = 1;
                     if (class_exists($name) || interface_exists($name)) {
                         return ;
                     }
