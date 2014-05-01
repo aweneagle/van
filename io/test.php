@@ -1,9 +1,10 @@
 <?php
     interface A{
+        const BBC=1;
         public function a();
     }
     interface B{
-        public function a($param);
+        public function b();
     }
     interface C extends A,B{}
     class CC implements C{
