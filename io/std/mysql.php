@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * stdandard mysql
+ *
+ * $mysql->host = "127.0.0.1"
+ * $mysql->wrong_prop = "3306"   
+ */
+
 	class StdMysql implements IBlock, ICtrl{
 		private $host ;
 		private $port ;
@@ -7,26 +14,15 @@
 		private $passwd;
 
 		public function __get($name){
-			switch ($name) {
-			case "host":
-			case "port":
-			case "user":
-			case "passwd":
-				return $this->$name ;
-			default:
+            if (!properity_exists($this,$name)){
 				throw new Exception("unknown property of ".get_class($this).", property=".$name);
 			}
 		}
 		public function __set($name, $val){
-			switch ($name) {
-			case "host":
-			case "port":
-			case "user":
-			case "passwd":
-				return $this->$name = $val;
-			default:
+            if (!properity_exists($this,$name)){
 				throw new Exception("unknown property of ".get_class($this).", property=".$name);
 			}
+            $this->$name = $val;
 		}
 		public function query($query, $params){
 		}
