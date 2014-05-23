@@ -4,20 +4,21 @@
 interface IIo{
 }
 
+interface ILog{
+    public function log();
+}
 
 /* private properties accessable
  */
-interface IArr{
+interface ICtrl{
 	/* error: return false and print out warning info ; throw exception only when illeagle $val is passed in*/
 	public function __set($name, $val);
 	/* error: return false and print out warning info */
 	public function __get($name);
 	/* return true or false */
 	public function __isset($name);
-}
-
-interface IInput extends IArr {
-	public function all();
+    /* always return true */
+    public function config(array $conf);
 }
 
 abstract class IEvent{
@@ -40,7 +41,7 @@ interface IStream extends IIo{
  * like a db, a http interface, ...
  */
 interface IBlock extends IIo{
-	public function query($query, $params = null);
+	public function query($query, $params=null, $options=null);
 }
 
 /* buffered io
@@ -55,9 +56,11 @@ interface IBuffer extends IIo{
  * it is simply a hash table
  */
 interface IHash extends IIo{
-	public function get($key);
-	public function set($key, $val);
-	public function exists($key);
+	public function get($key, $options=null);
+	public function set($key, $val, $options=null);
+    public function del($key, $options=null);
+	public function exists($key, $options=null);
+    public function allkeys();
 }
 
 /* "tree" struct
@@ -87,6 +90,7 @@ interface ICsv extends IIo{
 	public function update(array $csv);
 	public function delete(array $csv);
 	public function count();
+    public function allkeys();
 }
 
 
