@@ -1,0 +1,50 @@
+/* we package */
+
+PROBLEMS:
+    1. have you ever been in sitution that use explode(",",$str) for many time to convert csv string into array ?
+    2. have you just find that when you write an array ($a,$b,$c) into mysql, you need a lot of simulate lines to be write ?
+    3. say you are faceing problem 2, then you find an addition log need to be add: monitor the input/output of mysql , what the fuck ...
+
+SOLUTION:
+    we abstract these oprations into some simple interface , like IO <read, write, close, open, flush, pop> ,  IoControl<set_attr, get_attr, del_attr>, Map<check, mapto>   
+    here is the used example:
+        
+        class Job implements IJob {
+
+            public function run(){
+
+                /*  now  "io" is a mysql interface */
+
+                van_link("io", new IoMysql("host", "port", "user", "passwd"));
+
+                van_set_state("io", "connected");
+                $something = van_read("io", "select something from db");
+                update($something);
+                van_write("io", "update $something into db");
+                van_set_state("io", "closed");
+    
+                //van_unlink("io"); // here we will auto unlink whenever no link points to IoMySql obj
+
+
+
+                /*  now "io" is a map interface */
+
+                van_link("io", new MapCsv2Arr);
+                $csv_arr = van_map("io", file_get_contents("example.csv"));
+
+                
+
+                van_link("map", "io");
+                /*  now "io" is a log file , and the "map" becomes to the map*/
+
+                van_link("io", IoLogfile("/tmp/log"));
+                van_write("io", json_encode(van_map("map", file_get_contents("example.csv")));
+            }
+        }
+
+        van_link("job_01", new Job);
+        van_run("job_01","some params");
+        van_unlink("job_01");
+
+
+
